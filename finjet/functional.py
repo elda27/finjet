@@ -1,6 +1,6 @@
 
 from functools import wraps
-from typing import Any, Callable, Optional, TypeVar
+from typing import Optional, TypeVar
 from finjet.container import Container
 
 
@@ -25,12 +25,12 @@ def inject(func: T) -> T:
 
     Parameters
     ----------
-    func : Callable[[Any], Any]
+    func : T
         Any function or class.
 
     Returns
     -------
-    Callable[[Any], Any]
+    T
         func
     """
     @wraps(func)
