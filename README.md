@@ -10,15 +10,15 @@ It can be used to turn your modules to loosely coupled parts. and configurations
 Dependency injection is performed on the arguments given with the `Depends` function as the default argument.
 The inserted values will be values of the variable given by `Container.configure` and the return value of the function.
 
-# Installation
+## Installation
 
 Latest PyPI stable release
 
-```
+```bash
 pip install finjet
 ```
 
-# Example
+## Example
 
 ```python
 from typing import NamedTuple
