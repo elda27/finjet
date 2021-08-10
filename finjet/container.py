@@ -35,7 +35,7 @@ class Container:
         self.__class__.current = self.last_current
 
     def inject(self, obj: type) -> Callable[[Any], Any]:
-        """Injecting dependecies to arguments of input object. 
+        """Injecting dependecies to arguments of input object.
 
         Parameters
         ----------
@@ -55,25 +55,24 @@ class Container:
                     inject_fields[name] = getattr(self.configuration, name)
                 else:
                     inject_fields[name] = self.solve_dependency(
-                        value
+                        name, value
                     )
+            elif value is Notset:
+                pass  # Ignore if notset
             else:
                 inject_fields[name] = value
 
-        @wraps(obj)
-        def _(*args, **kwargs):
-            return obj(*args, **inject_fields, **kwargs)
-        return _
+        return injecter.replace_field_values(inject_fields)
 
-    def solve_dependency(self, value: Dependency) -> Any:
+    def solve_dependency(self, name: str, value: Dependency) -> Any:
         """Solve hierarchy of depedencies.
 
         Parameters
         ----------
+        name : str
+            field name.
         value : Dependency
             value
-        _depth : str
-            unique identification for singleton object.
 
         Returns
         -------
@@ -85,16 +84,23 @@ class Container:
             if cache is not None:
                 return cache
 
+        if value.klass_or_func is None:
+            # TODO: Add more information if exception
+            return getattr(self.configuration, name)
+
         # Solve dependency
         injecter = create_injecter(value.klass_or_func)
 
         def _solve_dependency(key: str, value: Any) -> Any:
             if isinstance(value, Dependency):
-                return self.solve_dependency(value)
+                return self.solve_dependency(key, value)
             elif callable(value):
                 return value()
-            elif hasattr(self.configuration, key):
-                return getattr(self.configuration, key)
+            elif value is None:
+                if hasattr(self.configuration, key):
+                    return getattr(self.configuration, key)
+                else:
+                    raise ValueError(f'Not configurated value: {key}')
             else:
                 return value
 
