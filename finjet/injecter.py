@@ -1,9 +1,7 @@
 import inspect
-from functools import partial, wraps
+from functools import partial
 from abc import ABCMeta, abstractmethod
 from typing import Any, Dict, Generic, Iterator, NamedTuple, Optional, Tuple, TypeVar
-
-from finjet.dependency import Dependency
 
 try:
     from pydantic import BaseModel
@@ -12,6 +10,10 @@ except:
         pass
 
 T = TypeVar('T')
+
+
+class Notset:
+    pass
 
 
 class InjecterBase(Generic[T], metaclass=ABCMeta):
@@ -59,8 +61,13 @@ class FunctionInjecter(InjecterBase):
         return partial(self.obj, **fields)
 
 
-class Notset:
-    pass
+class ClassInjecter(FunctionInjecter):
+    def __init__(self, obj: T) -> None:
+        self.klass = obj
+        super().__init__(obj.__init__)
+
+    def replace_field_values(self, fields: Dict[str, Any]) -> T:
+        return partial(self.klass, **fields)
 
 
 class NamedtupleInjtecter(InjecterBase[NamedTuple]):
@@ -72,7 +79,7 @@ class NamedtupleInjtecter(InjecterBase[NamedTuple]):
             yield field, self.obj._field_defaults[field]
 
     def replace_field_values(self, fields: Dict[str, Any]) -> T:
-        return self.obj._replace(fields)
+        return partial(self.obj, **fields)
 
 
 class PydanticInjecter(InjecterBase[BaseModel]):
@@ -94,5 +101,10 @@ def create_injecter(t: type):
         return NamedtupleInjtecter(t)
     elif isinstance(t, type) and issubclass(t, BaseModel):
         return PydanticInjecter(t)
+    elif inspect.isclass(t):
+        return ClassInjecter(t)
     else:
-        return FunctionInjecter(t)
+        try:
+            return FunctionInjecter(t)
+        except TypeError:
+            raise TypeError(f'Unsupported callable type: {t}')
