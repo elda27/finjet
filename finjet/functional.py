@@ -12,6 +12,8 @@ def get_global_container() -> Optional[Container]:
     Optional[Container]
         Container object
     """
+    if Container.current is None:
+        Container.current = Container()
     return Container.current
 
 
