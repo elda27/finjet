@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "finjet"
-version = "0.1.0"
+version = "0.1.1"
 description = "Dependency injection like FastAPI."
 authors = ["elda27 <kaz.birdstick@gmail.com>"]
 license = "Apache2.0"
