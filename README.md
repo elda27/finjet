@@ -68,14 +68,14 @@ def main():
         print('#Tire:', Tire.count)  # 1
 
     # If the configuration value is changed, the displaying value is difference.
-    #
+    # But `Tire.count` is same so that a second argument, the Tire object is re-used.
     container.configure(Config(20, 100))
     with container:
         print('Speed:', get_tire_speed())  # 2000
         print('#Tire:', Tire.count)  # 1
 
     # If the configuration value is changed, the displaying value is difference.
-    # But as a second argument, the `tire_r`
+    # The `Tire` object is updated.
     container.configure(Config(20, 10))
     with container:
         print('Speed:', get_tire_speed())  # 400
