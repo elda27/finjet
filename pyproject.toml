@@ -4,9 +4,27 @@ version = "0.1.0"
 description = "Dependency injection like FastAPI."
 authors = ["elda27 <kaz.birdstick@gmail.com>"]
 license = "Apache2.0"
+readme = "README.md"
+keywords = [
+  "Dependency injection",
+  "DI",
+  "Inversion of Control",
+  "IoC",
+  "Factory",
+  "Singleton",
+  "Design patterns",
+]
+classifiers=[
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Topic :: Software Development",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 pydantic = {version="*", optional=true}
 
 [tool.poetry.dev-dependencies]
