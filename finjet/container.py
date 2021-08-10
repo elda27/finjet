@@ -79,11 +79,6 @@ class Container:
         Any
             Solved value
         """
-        if value.is_singleton:  # If singleton object, check cache.
-            cache = self.solve_singleton_cache(value)
-            if cache is not None:
-                return cache
-
         if value.klass_or_func is None:
             # TODO: Add more information if exception
             return getattr(self.configuration, name)
@@ -119,15 +114,25 @@ class Container:
                     field_name, field_value
                 )
 
-        result = value.klass_or_func(*positional_args, **keyword_args)
         if value.is_singleton:
-            self.add_singleton(
-                value,
-                result
+            cache = self.solve_singleton_cache(
+                value, *positional_args, **keyword_args
             )
+            if cache is not None:
+                return cache
+            else:
+                result = value.klass_or_func(*positional_args, **keyword_args)
+                self.add_singleton(
+                    value,
+                    result,
+                    *positional_args, **keyword_args
+                )
+        else:
+            result = value.klass_or_func(*positional_args, **keyword_args)
+
         return result
 
-    def solve_singleton_cache(self, dependency: Dependency) -> Optional[Any]:
+    def solve_singleton_cache(self, dependency: Dependency, *args, **kwargs) -> Optional[Any]:
         """Get singleton cache if exists
 
         Parameters
@@ -141,11 +146,11 @@ class Container:
             singleton object
         """
         return self.singletons.get(
-            get_indentification(dependency)
+            get_indentification(dependency, *args, **kwargs)
         )
 
-    def add_singleton(self, dependency: Dependency, result: Any):
+    def add_singleton(self, dependency: Dependency, result: Any, *args, **kwargs):
         """Add singleton object"""
         self.singletons[
-            get_indentification(dependency)
+            get_indentification(dependency, *args, **kwargs)
         ] = result
