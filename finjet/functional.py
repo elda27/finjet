@@ -1,6 +1,6 @@
 
 from functools import wraps
-from typing import Optional, TypeVar
+from typing import TypeVar
 from finjet.container import Container
 
 
@@ -9,7 +9,7 @@ def set_global_container(container: Container) -> None:
 
     Returns
     -------
-    Optional[Container]
+    Container
         Container object
     """
     Container.current = container

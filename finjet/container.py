@@ -1,4 +1,3 @@
-from functools import wraps
 from finjet.dependency import Dependency, get_indentification
 from finjet.injecter import Notset, create_injecter
 from typing import Any, Callable, NamedTuple, Optional
