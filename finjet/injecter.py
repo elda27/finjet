@@ -5,7 +5,7 @@ from typing import Any, Dict, Generic, Iterator, NamedTuple, Optional, Tuple, Ty
 
 try:
     from pydantic import BaseModel
-except:
+except ImportError:
     class BaseModel:
         pass
 

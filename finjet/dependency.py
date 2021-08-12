@@ -1,4 +1,4 @@
-from typing import Hashable, NamedTuple, Callable, Any
+from typing import NamedTuple, Callable, Any
 
 
 class Dependency(NamedTuple):
