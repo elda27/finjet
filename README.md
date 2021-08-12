@@ -7,7 +7,7 @@ Simple dependency injection library like fastapi.
 It can be used to turn your modules to loosely coupled parts. and configurations to allow you to easily re-use and test your code.
 
 Dependency injection is performed on the arguments given with the `Depends` function as the default argument.
-The inserted values will be values of the variable given by `Container.configure` and the return value of the function.
+The inserted value will be given values of NamedTuple via `Container.configure` or the return value of the function.
 
 # Installation
 
