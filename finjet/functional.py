@@ -4,12 +4,23 @@ from typing import Any, Callable, Optional, TypeVar
 from finjet.container import Container
 
 
-def get_global_container() -> Optional[Container]:
-    """get global container object
+def set_global_container(container: Container) -> None:
+    """Set global container object
 
     Returns
     -------
     Optional[Container]
+        Container object
+    """
+    Container.current = container
+
+
+def get_global_container() -> Container:
+    """get global container object
+
+    Returns
+    -------
+    Container
         Container object
     """
     if Container.current is None:
