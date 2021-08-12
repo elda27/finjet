@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "finjet"
-version = "0.1.1"
+version = "0.1.2"
 description = "Dependency injection like FastAPI."
 authors = ["elda27 <kaz.birdstick@gmail.com>"]
 license = "Apache2.0"
@@ -15,6 +15,7 @@ keywords = [
   "Design patterns",
 ]
 classifiers=[
+  "Programming Language :: Python :: 3.6",
   "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
@@ -24,7 +25,7 @@ classifiers=[
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 pydantic = {version="*", optional=true}
 
 [tool.poetry.dev-dependencies]

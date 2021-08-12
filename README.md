@@ -1,23 +1,24 @@
 # finjet
 
-[![codecov](https://codecov.io/gh/elda27/finjet/branch/master/graph/badge.svg?token=Lnx3ZA0VKg)](https://codecov.io/gh/elda27/finjet)
 [![PyPI version](https://badge.fury.io/py/finjet.svg)](https://badge.fury.io/py/finjet)
+[![codecov](https://codecov.io/gh/elda27/finjet/branch/master/graph/badge.svg?token=Lnx3ZA0VKg)](https://codecov.io/gh/elda27/finjet)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/0ccb2ee2bed64adb8c2e96a9b45aba95)](https://www.codacy.com/gh/elda27/finjet/dashboard?utm_source=github.com&utm_medium=referral&utm_content=elda27/finjet&utm_campaign=Badge_Grade)
 
 Simple dependency injection library like fastapi.
 It can be used to turn your modules to loosely coupled parts. and configurations to allow you to easily re-use and test your code.
 
 Dependency injection is performed on the arguments given with the `Depends` function as the default argument.
-The inserted values will be values of the variable given by `Container.configure` and the return value of the function.
+The inserted value will be given values of NamedTuple via `Container.configure` or the return value of the function.
 
-# Installation
+## Installation
 
 Latest PyPI stable release
 
-```
+```bash
 pip install finjet
 ```
 
-# Example
+## Example
 
 ```python
 from typing import NamedTuple
