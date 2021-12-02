@@ -23,8 +23,6 @@ def get_global_container() -> Container:
     Container
         Container object
     """
-    if Container.current is None:
-        Container.current = Container()
     return Container.current
 
 
